@@ -12,6 +12,8 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,900&display=swap" rel="stylesheet">
 
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="{% static 'js/cart.js' %}" defer></script>
 </head>
 <body>
 	<div class="main-content">
@@ -22,26 +24,26 @@
 			</div>
 			<div class="card-body">
 				<!-- loading items -->
-				{% if shoes %}
-				{% for shoe in shoes %}
+				{% if shop_items %}
+				{% for shop_item in shop_items %}
 				<div class="shop-item">
-					<div class="shop-item-image" style="background-color: {{shoe.color}};">
-						<img src="{{shoe.image}}" alt="Nike Air Zoom Pegasus 36">
+					<div class="shop-item-image" style="background-color: {{shop_item.color}};">
+						<img src="{{shop_item.image}}" alt="Nike Air Zoom Pegasus 36">
 					</div>
-					<div class="shop-item-name">{{shoe.name}}</div>
-					<div class="shop-item-description">{{shoe.description}}</div>
+					<div class="shop-item-name">{{shop_item.name}}</div>
+					<div class="shop-item-description">{{shop_item.description}}</div>
 					<div class="shop-item-bottom">
 						<div class="shop-item-price">
-							${{shoe.price}}
+							${{shop_item.price}}
 						</div>
-						<div data-shoe={{shoe.id}} data-action="add" class="shop-item-button">
+						<div data-itemid="{{shop_item.id}}" class="shop-item-button">
 							<p>ADD TO CART</p>
 						</div>
 					</div>
 				</div>
 				{% endfor %}
 				{% else %}
-				<p>No shoe found</p>
+				<p>No shop_item found</p>
 				{% endif %}
 
 			</div>
@@ -52,63 +54,45 @@
 				<img src="{% static 'images/nike.png' %}" alt="nike" class="card-top-logo">
 				<div class="card-top-title">
 					Your Cart
-					<span class="card-title-amount">$108.97</span>
+					<span class="card-title-amount">${{cart.total_price}}</span>
 				</div>
 			</div>
 			<div class="card-body">
+				{% if cart_items %}
+				<div>
+					<div>
+						{% for cart_item in cart_items %}
+						<div class="cart-item">
+							<div class="cart-item-left">
+								<div class="cart-item-image" style="background-color: {{cart_item.shop_item.color}};">
+									<div class="cart-item-block">
+										<img src="{{cart_item.shop_item.image}}" alt="{{cart_item.shop_item.name}}">
+									</div>
+								</div>
+							</div>
+							<div class="cart-item-right">
+								<div class="cart-item-name">{{cart_item.shop_item.name}}</div>
+								<div class="cart-item-price">${{cart_item.price}}</div>
+								<div class="cart-item-action">
+									<div class="cart-item-count">
+										<div class="cart-item-count-button">-</div>
+										<div class="cart-item-count-number">{{cart_item.quantity}}</div>
+										<div data-itemid="{{cart_item.shop_item.id}}" class="cart-item-count-button">+</div>
+									</div>
+									<div class="cart-item-remove">
+										<img src="{% static 'images/trash.png' %}">
+									</div>
+								</div>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+				{% else %}
 				<div class="card-empty">
 					<p class="card-empty-text">Your cart is empty.</p>
 				</div>
-				<div>
-					<div>
-						<div class="cart-item">
-							<div class="cart-item-left">
-								<div class="cart-item-image" style="background-color: #e1e7ed;">
-									<div class="cart-item-block">
-										<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1315882/air-zoom-pegasus-36-mens-running-shoe-wide-D24Mcz-removebg-preview.png" alt="Nike Air Zoom Pegasus 36">
-									</div>
-								</div>
-							</div>
-							<div class="cart-item-right">
-								<div class="cart-item-name">Nike Air Zoom Pegasus 36</div>
-								<div class="cart-item-price">$108.97</div>
-								<div class="cart-item-action">
-									<div class="cart-item-count">
-										<div class="cart-item-count-button">-</div>
-										<div class="cart-item-count-number">1</div>
-										<div class="cart-item-count-button">+</div>
-									</div>
-									<div class="cart-item-remove">
-										<img src="{% static 'images/trash.png' %}">
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="cart-item">
-							<div class="cart-item-left">
-								<div class="cart-item-image" style="background-color: #4D317F;">
-									<div class="cart-item-block">
-										<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1315882/air-zoom-pegasus-36-shield-mens-running-shoe-24FBGb__1_-removebg-preview.png" alt="Nike Air Zoom Pegasus 36 Shield">
-									</div>
-								</div>
-							</div>
-							<div class="cart-item-right">
-								<div class="cart-item-name">Nike Air Zoom Pegasus 36 Shield</div>
-								<div class="cart-item-price">$89.97</div>
-								<div class="cart-item-action">
-									<div class="cart-item-count">
-										<div class="cart-item-count-button">-</div>
-										<div class="cart-item-count-number">1</div>
-										<div class="cart-item-count-button">+</div>
-									</div>
-									<div class="cart-item-remove">
-										<img src="{% static 'images/trash.png' %}">
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>

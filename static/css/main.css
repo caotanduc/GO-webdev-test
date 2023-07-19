@@ -19,7 +19,7 @@ body {
 
 @keyframes wave {
 	0% {
-		transform: translateX(-50%) skewY(-8deg);
+		transform: translateX(-55%) skewY(-8deg);
 	}
 	100% {
 		transform: translateX(-45%) skewY(-8deg);
@@ -28,7 +28,7 @@ body {
 
 
 .main-content::before {
-	content: "";
+	content: " ";
 	display: block;
 	position: fixed;
 	width: 300%;
@@ -40,7 +40,7 @@ body {
 	background-color: #f6c90e;
 	z-index: -1;
 
-	animation: wave 8s ease-in-out 0s infinite alternate none;
+	animation: wave 4s ease-in-out .25s infinite alternate;
 }
 
 .card {
