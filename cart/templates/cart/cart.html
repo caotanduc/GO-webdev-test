@@ -6,7 +6,7 @@
 <div>
 	<div>
 		{% for cart_item in cart_items %}
-		<div class="cart-item">
+		<div id="div{{cart_item.shop_item.id}}" class="cart-item">
 			<div class="cart-item-left">
 				<div class="cart-item-image" style="background-color: {{cart_item.shop_item.color}};">
 					<div class="cart-item-block">

@@ -16,8 +16,6 @@ function getCookie(name) {
 const csrftoken = getCookie('csrftoken');
 
 
-const updateBtns = document.getElementsByClassName('shop-item-button')
-
 $(document).ready(function() {
 	$('.shop-item-button').on('click', function(event) {
 		event.preventDefault();
@@ -35,6 +33,9 @@ $(document).ready(function() {
 			},
 			data: JSON.stringify(data),
 			dataType: 'json',
+			success: function(data) {
+
+			}
 		})
 	})
 
@@ -59,6 +60,9 @@ $(document).ready(function() {
 				'diff': diff,
 			}),
 			dataType: 'json',
+			success: function(data) {
+				
+			}
 		})
 	})
 
@@ -78,6 +82,9 @@ $(document).ready(function() {
 				'id': itemId,
 			}),
 			dataType: 'json',
+			success: function(data) {
+				
+			}
 		})
 	})	
 })
