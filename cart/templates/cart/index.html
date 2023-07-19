@@ -22,36 +22,28 @@
 			</div>
 			<div class="card-body">
 				<!-- loading items -->
+				{% if shoes %}
+				{% for shoe in shoes %}
 				<div class="shop-item">
-					<div class="shop-item-image" style="background-color: #e1e7ed;">
-						<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1315882/air-zoom-pegasus-36-mens-running-shoe-wide-D24Mcz-removebg-preview.png" alt="Nike Air Zoom Pegasus 36">
+					<div class="shop-item-image" style="background-color: {{shoe.color}};">
+						<img src="{{shoe.image}}" alt="Nike Air Zoom Pegasus 36">
 					</div>
-					<div class="shop-item-name">Nike Air Zoom Pegasus 36</div>
-					<div class="shop-item-description">The iconic Nike Air Zoom Pegasus 36 offers more cooling and mesh that targets breathability across high-heat areas. A slimmer heel collar and tongue reduce bulk, while exposed cables give you a snug fit at higher speeds.</div>
+					<div class="shop-item-name">{{shoe.name}}</div>
+					<div class="shop-item-description">{{shoe.description}}</div>
 					<div class="shop-item-bottom">
 						<div class="shop-item-price">
-							$108.97
+							${{shoe.price}}
 						</div>
-						<div class="shop-item-button">
+						<div data-shoe={{shoe.id}} data-action="add" class="shop-item-button">
 							<p>ADD TO CART</p>
 						</div>
 					</div>
 				</div>
-				<div class="shop-item">
-					<div class="shop-item-image" style="background-color: #4D317F;">
-						<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1315882/air-zoom-pegasus-36-shield-mens-running-shoe-24FBGb__1_-removebg-preview.png" alt="Nike Air Zoom Pegasus 36 Shield">
-					</div>
-					<div class="shop-item-name">Nike Air Zoom Pegasus 36 Shield</div>
-					<div class="shop-item-description">The Nike Air Zoom Pegasus 36 Shield gets updated to conquer wet routes. A water-repellent upper combines with an outsole that helps create grip on wet surfaces, letting you run in confidence despite the weather.</div>
-					<div class="shop-item-bottom">
-						<div class="shop-item-price">
-							$89.97
-						</div>
-						<div class="shop-item-button">
-							<p>ADD TO CART</p>
-						</div>
-					</div>
-				</div>
+				{% endfor %}
+				{% else %}
+				<p>No shoe found</p>
+				{% endif %}
+
 			</div>
 		</div>
 
