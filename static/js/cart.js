@@ -18,44 +18,66 @@ const csrftoken = getCookie('csrftoken');
 
 const updateBtns = document.getElementsByClassName('shop-item-button')
 
-for (let i = 0; i < updateBtns.length; i++) {
-	updateBtns[i].addEventListener('click', () => {
+$(document).ready(function() {
+	$('.shop-item-button').on('click', function(event) {
+		event.preventDefault();
 		let url = '/add_to_cart'
+		let data = { 
+			'id' : $(this).data('itemid') ,
+		};
 
-		let data = { 'id' : updateBtns[i].dataset.itemid }
-
-		fetch (url, {
-			method: 'POST',
-			headers: {"Content-Type":"application/json", 'X-CSRFToken': csrftoken},
-			body: JSON.stringify(data)	
+		$.ajax({
+			url: url,
+			type: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-CSRFToken': csrftoken,
+			},
+			data: JSON.stringify(data),
+			dataType: 'json',
 		})
-		.then(res => res.json())
-		.then(data => {
-			console.log(data)
-		})
-		.catch(error => { console.error(error) })
 	})
-}
 
-// $(document).ready(function() {
-// 	$('.shop-item-button').on('click', function(event) {
-// 		event.preventDefault();
-// 		let url = '/add_to_cart'
-// 		let data = { 'id' : $(this).data('itemid') };
+	$('.cart-item-count-button').on('click', function(event) {
+		event.preventDefault()
+		let url = '/update_cart_item'
+		let diff = 1
+		const itemId = $(this).data('itemid')
 
-// 		$.ajax({
-// 			url: url,
-// 			type: 'POST',
-// 			headers: {
-// 				'Content-Type': 'application/json',
-// 				'X-CSRFToken': csrftoken,
-// 			},
-// 			data: JSON.stringify(data),
-// 			dataType: 'json',
-// 			success: function(data) {
-// 				$(this).val(data)
-// 			}
-// 		})
-// 	})
-// })
+		if ($(this).html() === '-') 
+			diff = -1
 
+		$.ajax({
+			type: 'POST',
+			url: url,
+			headers: {
+				'Content-Type': 'application/json',
+				'X-CSRFToken': csrftoken,		
+			},
+			data: JSON.stringify({
+				'id': itemId,
+				'diff': diff,
+			}),
+			dataType: 'json',
+		})
+	})
+
+	$('.cart-item-remove').on('click', function(event) {
+		event.preventDefault()
+		let url = '/remove_cart_item'
+		const itemId = $(this).data('itemid')
+
+		$.ajax({
+			type: 'POST',
+			url: url,
+			headers: {
+				'Content-Type': 'application/json',
+				'X-CSRFToken': csrftoken,		
+			},
+			data: JSON.stringify({
+				'id': itemId,
+			}),
+			dataType: 'json',
+		})
+	})	
+})

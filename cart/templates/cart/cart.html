@@ -1,0 +1,42 @@
+{% load static %}
+{% block content %}
+
+{% if cart_items %}
+
+<div>
+	<div>
+		{% for cart_item in cart_items %}
+		<div class="cart-item">
+			<div class="cart-item-left">
+				<div class="cart-item-image" style="background-color: {{cart_item.shop_item.color}};">
+					<div class="cart-item-block">
+						<img src="{{cart_item.shop_item.image}}" alt="{{cart_item.shop_item.name}}">
+					</div>
+				</div>
+			</div>
+			<div class="cart-item-right">
+				<div class="cart-item-name">{{cart_item.shop_item.name}}</div>
+				<div class="cart-item-price">${{cart_item.price}}</div>
+				<div class="cart-item-action">
+					<div class="cart-item-count">
+						<div data-itemid="{{cart_item.shop_item.id}}" class="cart-item-count-button">-</div>
+						<div data-itemid="{{cart_item.shop_item.id}}" class="cart-item-count-number">{{cart_item.quantity}}</div>
+						<div data-itemid="{{cart_item.shop_item.id}}" class="cart-item-count-button">+</div>
+					</div>
+					<div data-itemid="{{cart_item.shop_item.id}}" class="cart-item-remove">
+						<img src="{% static 'images/trash.png' %}">
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% else %}
+<div class="card-empty">
+	<p class="card-empty-text">Your cart is empty.</p>
+</div>
+
+{% endif %}
+
+{% endblock %}

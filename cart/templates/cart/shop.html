@@ -1,0 +1,27 @@
+{% load static %}
+{% block content %}
+
+{% if shop_items %}
+{% for shop_item in shop_items %}
+
+<div class="shop-item">
+	<div class="shop-item-image" style="background-color: {{shop_item.color}};">
+		<img src="{{shop_item.image}}" alt="Nike Air Zoom Pegasus 36">
+	</div>
+	<div class="shop-item-name">{{shop_item.name}}</div>
+	<div class="shop-item-description">{{shop_item.description}}</div>
+	<div class="shop-item-bottom">
+		<div class="shop-item-price">
+			${{shop_item.price}}
+		</div>
+		<div data-itemid="{{shop_item.id}}" class="shop-item-button">
+			<p>ADD TO CART</p>
+		</div>
+	</div>
+</div>
+{% endfor %}
+{% else %}
+<p>No shop_item found</p>
+{% endif %}
+
+{% endblock %}

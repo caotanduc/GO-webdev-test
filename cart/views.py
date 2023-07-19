@@ -12,7 +12,7 @@ def index(request):
 		cart, created = Cart.objects.get_or_create(user=request.user)
 		cart_items = cart.cart_items.all()
 
-	context = {'shop_items': shop_items, 'cart': cart, 'cart_items': cart_items}
+	context = {'shop_items': shop_items, 'cart': cart, 'cart_items':cart_items}
 	return render(request, 'cart/index.html', context)
 
 def add_to_cart(request):
@@ -23,7 +23,39 @@ def add_to_cart(request):
 	if request.user.is_authenticated:
 		cart, created = Cart.objects.get_or_create(user=request.user)
 		cart_item, created = CartItem.objects.get_or_create(cart=cart, shop_item=shoe)
-		cart_item.quantity += 1
+		if cart_item.quantity == 0:
+			cart_item.quantity = 1
 		cart_item.save()
 
 	return JsonResponse(cart_item.id, safe=False)
+
+def update_cart_item(request):
+	data = json.loads(request.body)
+
+	item_id = ShopItem.objects.get(id=data['id'])
+	diff = int(data['diff'])
+
+	if request.user.is_authenticated:
+		cart, created = Cart.objects.get_or_create(user=request.user)
+		cart_item, created = CartItem.objects.get_or_create(cart=cart, shop_item=item_id)
+		cart_item.quantity += diff
+		if cart_item.quantity <= 0:
+			cart_item.delete()
+			return JsonResponse(item_id.id, safe=False)
+		else:
+			cart_item.save()
+
+		return JsonResponse(cart_item.id, safe=False)
+
+
+def remove_cart_item(request):
+	data = json.loads(request.body)
+
+	item_id = ShopItem.objects.get(id=data['id'])
+
+	if request.user.is_authenticated:
+		cart, created = Cart.objects.get_or_create(user=request.user)
+		cart_item, created = CartItem.objects.get_or_create(cart=cart, shop_item=item_id)
+		cart_item.delete()
+
+	return JsonResponse(item_id.id, safe=False)
