@@ -19,7 +19,7 @@ class ShopItem(models.Model):
 
 class Cart(models.Model):
 	id = models.UUIDField(default=uuid.uuid4, primary_key=True)
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	user = User.objects.get_or_create(username='whatever')[0]
 
 	def __str__(self):
 		return str(self.id)

@@ -2,14 +2,13 @@ from django.shortcuts import render, redirect
 from .models import ShopItem, Cart, CartItem
 from django.http import JsonResponse
 import json
-from django.contrib import messages
 
 # Create your views here.
 def index(request):
 	shop_items = ShopItem.objects.all()
 
 	if request.user.is_authenticated:
-		cart, created = Cart.objects.get_or_create(user=request.user)
+		cart, created = Cart.objects.get_or_create()
 		cart_items = cart.cart_items.all()
 
 	context = {'shop_items': shop_items, 'cart': cart, 'cart_items':cart_items}
@@ -22,7 +21,7 @@ def add_to_cart(request):
 
 
 	if request.user.is_authenticated:
-		cart, created = Cart.objects.get_or_create(user=request.user)
+		cart, created = Cart.objects.get_or_create()
 		cart_item, created = CartItem.objects.get_or_create(cart=cart, shop_item=item_id)
 		update_data = {}	
 
@@ -56,7 +55,7 @@ def update_cart_item(request):
 	}
 
 	if request.user.is_authenticated:
-		cart, created = Cart.objects.get_or_create(user=request.user)
+		cart, created = Cart.objects.get_or_create()
 		cart_item, created = CartItem.objects.get_or_create(cart=cart, shop_item=item_id)
 		cart_item.quantity += diff
 		cart_item.save()
@@ -86,7 +85,7 @@ def remove_cart_item(request):
 	item_id = ShopItem.objects.get(id=data['id'])
 
 	if request.user.is_authenticated:
-		cart, created = Cart.objects.get_or_create(user=request.user)
+		cart, created = Cart.objects.get_or_create()
 		cart_item, created = CartItem.objects.get_or_create(cart=cart, shop_item=item_id)
 		cart_item.quantity=0
 		ShopItem.objects.filter(pk=item_id.pk).update(used=False)
