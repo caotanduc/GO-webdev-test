@@ -46,6 +46,13 @@ Nice to have:
 - [ ] Smooth animations (don't really need to be same as the demo, just do what you think is good).
 - [ ] Deploy the application to heroku.
 
+## tech stack
+- Django
+- mysql
+- HTML / CSS
+- JS (JQuery, AJAX)
+- python (3.11.4)
+
 ## troubleshooting
 
 ## reference
