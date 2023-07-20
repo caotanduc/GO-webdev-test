@@ -49,4 +49,4 @@ Nice to have:
 ## troubleshooting
 
 ## reference
-- [webdev-intern-assignmeng](https://github.com/LarryPham1801/webdev-intern-assignment)
+- [webdev-intern-assignment](https://github.com/LarryPham1801/webdev-intern-assignment)
