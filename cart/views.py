@@ -28,7 +28,6 @@ def add_to_cart(request):
 
 		if cart_item.quantity == 0:
 			cart_item.quantity = 1
-				
 			cart_item.save()
 
 			update_data['id'] = item_id.id,
