@@ -29,7 +29,6 @@ Must have:
 - [x] Display all products in Our Products section (for products data please check from Technical Requirements):
     - [x] Single product should have name, description, price, image and Add To Cart button.
     - [x] User able to click on Add To Cart to add target product to their cart.
-        - **bug**: page reload
     - Added product doesn't have Add To Cart button anymore, it should have Check Mark Icon (✓) instead.
         - [x] button disable
         - [ ] change Add to Cart to Check Mark Icon
