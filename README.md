@@ -29,9 +29,7 @@ Must have:
 - [x] Display all products in Our Products section (for products data please check from Technical Requirements):
     - [x] Single product should have name, description, price, image and Add To Cart button.
     - [x] User able to click on Add To Cart to add target product to their cart.
-    - Added product doesn't have Add To Cart button anymore, it should have Check Mark Icon (✓) instead.
-        - [x] button disable
-        - [ ] change Add to Cart to Check Mark Icon
+    - [x] Added product doesn't have Add To Cart button anymore, it should have Check Mark Icon (✓) instead.
 - [x] Display all added products in Your Cart section:
     - [x] Each product in cart should have name, price, image, increase/decrease amount button and remove button.
     - [x] User able to increase/decrease amount of a product in cart. When product's amount is decreased to zero, that product will be removed from cart naturally.
