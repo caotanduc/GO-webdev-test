@@ -41,9 +41,12 @@ Must have:
 Nice to have:
 - [x] Responsive design (look good on all devices: desktops, tablets & mobile phones).
 - [ ] Smooth animations (don't really need to be same as the demo, just do what you think is good).
-- [ ] Deploy the application to heroku.
+- [ ] Deploy the application to ~~heroku~~ [render.com](render.com).
+
+**link web demo**: [golden-sneakers](https://golden-sneakers.onrender.com/)
 
 **video demo**: [link](https://studenthcmusedu-my.sharepoint.com/:v:/g/personal/20120270_student_hcmus_edu_vn/EXJeZ9TDZplAtgoJ32dNHekB-6R0FKSLAgwlkwqpLaeJ3w?e=7ea2C3)
+
 
 ## tech stack
 - Django
