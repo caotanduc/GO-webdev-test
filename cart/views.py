@@ -85,6 +85,7 @@ def remove_cart_item(request):
 	if request.user.is_authenticated:
 		cart, created = Cart.objects.get_or_create(user=request.user)
 		cart_item, created = CartItem.objects.get_or_create(cart=cart, shop_item=item_id)
+		cart_item.quantity=0
 		cart_item.delete()
 
 	return JsonResponse({ 'total_price' : cart.total_price }, safe=False)

@@ -46,71 +46,85 @@ $(document).ready(function() {
 			}
 		})
 	})
+})
 
-	$('.cart-item-count-button').on('click', function(event) {
+
+$(document).ready(function() {
+	$('#cart .card-body').on('click', function(event) {
 		event.preventDefault()
-		let url = '/update_cart_item'
-		let diff = 1
-		const itemId = $(this).data('itemid')
 
-		if ($(this).html() === '-') 
-			diff = -1
+		const target = event.target
+		const action = target.outerText
 
-		$.ajax({
-			type: 'POST',
-			url: url,
-			headers: {
-				'Content-Type': 'application/json',
-				'X-CSRFToken': csrftoken,		
-			},
-			data: JSON.stringify({
-				'id': itemId,
-				'diff': diff,
-			}),
-			dataType: 'json',
-			success: function(data) {
-				if (data['delete'] === true) {
-					$('#div' + itemId).css({ 'display' : 'none' , 'padding' : '0px'})
+		let itemId = target.getAttribute('data-itemid')
+
+		// + , - and "" for delete
+		if (action == '+' || action == '-') {
+			let url = '/update_cart_item'
+			let diff = 1
+
+			if (action == '-') {
+				diff = -1
+			}
+
+			$.ajax({
+				type: 'POST',
+				url: url,
+				headers: {
+					'Content-Type': 'application/json',
+					'X-CSRFToken': csrftoken,		
+				},
+				data: JSON.stringify({
+					'id': itemId,
+					'diff': diff,
+				}),
+				dataType: 'json',
+				success: function(data) {
+					if (data['delete'] === true) {
+						$('#div' + itemId).css({ 'display' : 'none' , 'padding' : '0px'})
+						$('.card-title-amount').html('$' + data['total_price'])
+
+						if (data['total_price'] == 0.0) {
+							$('#div' + itemId).remove()
+							$('.card-empty').css('display', 'block')
+							// $(target.parentElement).append('<div class="card-empty"><p class="card-empty-text">Your cart is empty.</p></div>')
+						}	
+					}
+					else {
+						$('#div' + itemId + ' .cart-item-count-number').html(data['quantity'])
+						$('#div' + itemId + ' .cart-item-price').html('$' + data['price'])
+						$('.card-title-amount').html('$' + data['total_price'])
+					}
+				}
+			})
+		}
+		else if (action == '') {
+			if (itemId === null) {
+				itemId = target.parentElement.getAttribute('data-itemid')
+			}
+			let url = '/remove_cart_item'
+			
+			$.ajax({
+				type: 'POST',
+				url: url,
+				headers: {
+					'Content-Type': 'application/json',
+					'X-CSRFToken': csrftoken,		
+				},
+				data: JSON.stringify({
+					'id': itemId,
+				}),
+				dataType: 'json',
+				success: function(data) {
 					$('.card-title-amount').html('$' + data['total_price'])
 
+					$('#div' + itemId).remove()
+	
 					if (data['total_price'] == 0.0) {
-						$('#cart .card-body').html('')
 						$('#cart .card-body').append('<div class="card-empty"><p class="card-empty-text">Your cart is empty.</p></div>')
-					}	
+					}
 				}
-				else {
-					$('#div' + itemId + ' .cart-item-count-number').html(data['quantity'])
-					$('#div' + itemId + ' .cart-item-price').html('$' + data['price'])
-					$('.card-title-amount').html('$' + data['total_price'])
-				}
-			}
-		})
+			})	
+		}
 	})
-
-	$('.cart-item-remove').on('click', function(event) {
-		event.preventDefault()
-		let url = '/remove_cart_item'
-		const itemId = $(this).data('itemid')
-
-		$.ajax({
-			type: 'POST',
-			url: url,
-			headers: {
-				'Content-Type': 'application/json',
-				'X-CSRFToken': csrftoken,		
-			},
-			data: JSON.stringify({
-				'id': itemId,
-			}),
-			dataType: 'json',
-			success: function(data) {
-				$('.card-title-amount').html('$' + data['total_price'])
-				$('#div' + itemId).css({ 'display' : 'none' , 'padding' : '0px'})
-
-				if (data['total_price'] === 0.0) {
-					$('#cart .card-body').append('<div class="card-empty"><p class="card-empty-text">Your cart is empty.</p></div>')
-				}
-			}
-		})
-	})	
 })
