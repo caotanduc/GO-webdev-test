@@ -46,6 +46,8 @@ Nice to have:
 - [ ] Smooth animations (don't really need to be same as the demo, just do what you think is good).
 - [ ] Deploy the application to heroku.
 
+**video demo**: [link](https://studenthcmusedu-my.sharepoint.com/:v:/g/personal/20120270_student_hcmus_edu_vn/EXJeZ9TDZplAtgoJ32dNHekB-6R0FKSLAgwlkwqpLaeJ3w?e=7ea2C3)
+
 ## tech stack
 - Django
 - mysql
