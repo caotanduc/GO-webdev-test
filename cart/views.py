@@ -18,16 +18,31 @@ def index(request):
 def add_to_cart(request):
 	data = json.loads(request.body)
 
-	shoe = ShopItem.objects.get(id=data['id'])
+	item_id = ShopItem.objects.get(id=data['id'])
+
 
 	if request.user.is_authenticated:
 		cart, created = Cart.objects.get_or_create(user=request.user)
-		cart_item, created = CartItem.objects.get_or_create(cart=cart, shop_item=shoe)
+		cart_item, created = CartItem.objects.get_or_create(cart=cart, shop_item=item_id)
+		update_data = {}	
+
 		if cart_item.quantity == 0:
 			cart_item.quantity = 1
-		cart_item.save()
+				
+			cart_item.save()
 
-	return JsonResponse({}, safe=False)
+			update_data['id'] = item_id.id,
+			update_data['image'] = item_id.image,
+			update_data['name'] = item_id.name,
+			update_data['description'] = item_id.description,
+			update_data['price'] = item_id.price,
+			update_data['color'] = item_id.color,
+			update_data['quantity'] = cart_item.quantity,
+			update_data['total_price'] = cart.total_price,
+
+	return JsonResponse(update_data, safe=False)
+
+
 
 def update_cart_item(request):
 	data = json.loads(request.body)
@@ -60,7 +75,6 @@ def update_cart_item(request):
 	update_data['price'] = cart_item.price,
 	update_data['total_price'] = cart.total_price,
 
-	print(update_data)
 	return JsonResponse(update_data, safe=False)
 
 
