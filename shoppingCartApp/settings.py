@@ -83,14 +83,16 @@ WSGI_APPLICATION = 'shoppingCartApp.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "shopping_cart_db",
-        "USER": "admin",
-        "PASSWORD": "admin",
-        "HOST": "127.0.0.1",
+        "NAME": "lsz0b94ywin6krwf",
+        "USER": "yy8mhc4xdv6nibqg",
+        "PASSWORD": "id7o97emodw730w8",
+        "HOST": "pk1l4ihepirw9fob.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
         "PORT": "3306",
+        'OPTIONS': {
+            'sql_mode': 'traditional',
+        },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

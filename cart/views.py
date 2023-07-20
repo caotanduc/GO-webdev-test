@@ -11,7 +11,6 @@ def index(request):
 	cart_items = {}
 
 	if request.user.is_authenticated:
-		print("authen")
 		cart, created = Cart.objects.get_or_create()
 		cart_items = cart.cart_items.all()
 
