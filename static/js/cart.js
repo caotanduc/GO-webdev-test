@@ -81,13 +81,11 @@ $(document).ready(function() {
 				dataType: 'json',
 				success: function(data) {
 					if (data['delete'] === true) {
-						$('#div' + itemId).css({ 'display' : 'none' , 'padding' : '0px'})
+						$('#div' + itemId).remove()
 						$('.card-title-amount').html('$' + data['total_price'])
 
 						if (data['total_price'] == 0.0) {
-							$('#div' + itemId).remove()
 							$('.card-empty').css('display', 'block')
-							// $(target.parentElement).append('<div class="card-empty"><p class="card-empty-text">Your cart is empty.</p></div>')
 						}	
 					}
 					else {

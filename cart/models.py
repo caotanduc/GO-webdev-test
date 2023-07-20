@@ -24,7 +24,7 @@ class Cart(models.Model):
 
 	@property
 	def total_price(self):
-		return sum([item.price for item in self.cart_items.all()])
+		return format(sum([item.price for item in self.cart_items.all()]), '.2f')
 
 class CartItem(models.Model):
 	shop_item = models.ForeignKey(ShopItem, on_delete=models.CASCADE, related_name='shop_item')
