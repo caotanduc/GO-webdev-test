@@ -2,8 +2,11 @@ from django.shortcuts import render, redirect
 from .models import ShopItem, Cart, CartItem
 from django.http import JsonResponse
 import json
+from django.views.decorators.csrf import ensure_csrf_cookie
+
 
 # Create your views here.
+@ensure_csrf_cookie
 def index(request):
 	shop_items = ShopItem.objects.all()
 
@@ -17,11 +20,13 @@ def index(request):
 	context = {'shop_items': shop_items, 'cart': cart, 'cart_items':cart_items}
 	return render(request, 'cart/index.html', context)
 
+@ensure_csrf_cookie
 def add_to_cart(request):
 	data = json.loads(request.body)
 
 	item_id = ShopItem.objects.get(id=data['id'])
 
+	update_data = { }
 
 	if request.user.is_authenticated:
 		cart, created = Cart.objects.get_or_create()
@@ -46,6 +51,7 @@ def add_to_cart(request):
 
 
 
+@ensure_csrf_cookie
 def update_cart_item(request):
 	data = json.loads(request.body)
 
@@ -81,7 +87,7 @@ def update_cart_item(request):
 
 	return JsonResponse(update_data, safe=False)
 
-
+@ensure_csrf_cookie
 def remove_cart_item(request):
 	data = json.loads(request.body)
 

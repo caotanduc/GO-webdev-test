@@ -28,7 +28,6 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'golden-sneakers.onrender.com',
     '127.0.0.1',
-    '0.0.0.0'
 ]
 
 
@@ -88,9 +87,9 @@ DATABASES = {
         "PASSWORD": "id7o97emodw730w8",
         "HOST": "pk1l4ihepirw9fob.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
         "PORT": "3306",
-        'OPTIONS': {
-            'sql_mode': 'traditional',
-        },
+        # 'OPTIONS': {
+        #     'sql_mode': 'traditional',
+        # },
     }
 }
 
