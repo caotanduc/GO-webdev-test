@@ -3,7 +3,7 @@
 
 {% if shop_items %}
 {% for shop_item in shop_items %}
-<div class="shop-item">
+<div class="shop-item" id="shop{{shop_item.id}}">
 	<div class="shop-item-image" style="background-color: {{shop_item.color}};">
 		<img src="{{shop_item.image}}" alt="Nike Air Zoom Pegasus 36">
 	</div>
@@ -14,7 +14,11 @@
 			${{shop_item.price}}
 		</div>
 		<div data-itemid="{{shop_item.id}}" class="shop-item-button">
-			<p>ADD TO CART</p>
+			{% if shop_item.used %}
+				<img src="{% static 'images/check.png' %}" style="width: 16px;" alt="Check Mark Icon">
+			{% else %}
+				<div>ADD TO CART</div>
+			{% endif %}
 		</div>
 	</div>
 </div>

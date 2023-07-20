@@ -11,6 +11,8 @@ class ShopItem(models.Model):
 	price = models.DecimalField(max_digits=8, decimal_places=2)
 	color = models.CharField(max_length=7)
 
+	used = models.BooleanField(default=False)
+
 	def __str__(self):
 		return self.name
 

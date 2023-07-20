@@ -27,6 +27,7 @@ def add_to_cart(request):
 		update_data = {}	
 
 		if cart_item.quantity == 0:
+			ShopItem.objects.filter(pk=item_id.pk).update(used=True)
 			cart_item.quantity = 1
 			cart_item.save()
 
@@ -62,9 +63,11 @@ def update_cart_item(request):
 
 		if cart_item.quantity <= 0:
 			cart_item.quantity = 0
+			ShopItem.objects.filter(pk=item_id.pk).update(used=False)
 			update_data['total_price'] = cart.total_price
 
 			update_data['delete'] = True
+
 			cart_item.delete()
 			return JsonResponse(update_data, safe=False)
 
@@ -86,6 +89,7 @@ def remove_cart_item(request):
 		cart, created = Cart.objects.get_or_create(user=request.user)
 		cart_item, created = CartItem.objects.get_or_create(cart=cart, shop_item=item_id)
 		cart_item.quantity=0
+		ShopItem.objects.filter(pk=item_id.pk).update(used=False)
 		cart_item.delete()
 
 	return JsonResponse({ 'total_price' : cart.total_price }, safe=False)

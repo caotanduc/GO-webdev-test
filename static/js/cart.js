@@ -39,9 +39,8 @@ $(document).ready(function() {
 
 					$('#cart .card-body').append('<div id="div'+data['id']+'" class="cart-item"> <div class="cart-item-left"> <div class="cart-item-image" style="background-color: '+data['color']+';"> <div class="cart-item-block"> <img src="'+data['image']+'" alt="'+data['name']+'"> </div> </div> </div> <div class="cart-item-right"> <div class="cart-item-name">'+data['name']+'</div> <div class="cart-item-price">$'+data['price']+'</div> <div class="cart-item-action"> <div class="cart-item-count"> <div data-itemid="'+data['id']+'" class="cart-item-count-button">-</div> <div data-itemid="'+data['id']+'" class="cart-item-count-number">'+data['quantity']+'</div> <div data-itemid="'+data['id']+'" class="cart-item-count-button">+</div> </div> <div data-itemid="'+data['id']+'" class="cart-item-remove"> <img src="'+trash_can+'"> </div> </div> </div> </div>');
 					
-				}
-				else {
 
+					$(event.target).html('<img src="' + check_mark + '" style="width: 16px;" alt="Check Mark"/>')
 				}
 			}
 		})
@@ -84,6 +83,8 @@ $(document).ready(function() {
 						$('#div' + itemId).remove()
 						$('.card-title-amount').html('$' + data['total_price'])
 
+						$('#shop' + itemId + ' .shop-item-button').text('ADD TO CART')
+
 						if (data['total_price'] == 0.0) {
 							$('.card-empty').css('display', 'block')
 						}	
@@ -117,6 +118,8 @@ $(document).ready(function() {
 					$('.card-title-amount').html('$' + data['total_price'])
 
 					$('#div' + itemId).remove()
+
+					$('#shop' + itemId + ' .shop-item-button').html('<p>ADD TO CART</p>')
 	
 					if (data['total_price'] == 0.0) {
 						$('#cart .card-body').append('<div class="card-empty"><p class="card-empty-text">Your cart is empty.</p></div>')
