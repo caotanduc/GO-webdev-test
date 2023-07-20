@@ -61,7 +61,15 @@ $(document).ready(function() {
 			}),
 			dataType: 'json',
 			success: function(data) {
-				
+				if (data['delete'] === true) {
+					$('#div' + itemId).css('display', 'none')
+					$('.card-title-amount').html('$' + data['total_price'])
+				}
+				else {
+					$('#div' + itemId + ' .cart-item-count-number').html(data['quantity'])
+					$('#div' + itemId + ' .cart-item-price').html('$' + data['price'])
+					$('.card-title-amount').html('$' + data['total_price'])
+				}
 			}
 		})
 	})
@@ -83,7 +91,12 @@ $(document).ready(function() {
 			}),
 			dataType: 'json',
 			success: function(data) {
-				
+				$('#div' + itemId).html('')
+				$('.card-title-amount').html('$' + data['total_price'])
+				if (data['total_price'] === 0.0) {
+					$('#cart .card-body').html('')
+					$('#cart .card-body').append('<div class="card-empty"><p class="card-empty-text">Your cart is empty.</p></div>')
+				}
 			}
 		})
 	})	

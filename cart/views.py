@@ -36,24 +36,31 @@ def update_cart_item(request):
 	diff = int(data['diff'])
 
 	update_data = {
-		'delete': False
+		'delete': False,
+		'price': 0,
 	}
 
 	if request.user.is_authenticated:
 		cart, created = Cart.objects.get_or_create(user=request.user)
 		cart_item, created = CartItem.objects.get_or_create(cart=cart, shop_item=item_id)
 		cart_item.quantity += diff
+		cart_item.save()
+
 		if cart_item.quantity <= 0:
+			cart_item.quantity = 0
+			update_data['total_price'] = cart.total_price
+
 			update_data['delete'] = True
 			cart_item.delete()
 			return JsonResponse(update_data, safe=False)
 
-		cart_item.save()
+
 
 	update_data['quantity'] = cart_item.quantity,
 	update_data['price'] = cart_item.price,
 	update_data['total_price'] = cart.total_price,
 
+	print(update_data)
 	return JsonResponse(update_data, safe=False)
 
 
@@ -67,4 +74,4 @@ def remove_cart_item(request):
 		cart_item, created = CartItem.objects.get_or_create(cart=cart, shop_item=item_id)
 		cart_item.delete()
 
-	return JsonResponse({}, safe=False)
+	return JsonResponse({ 'total_price' : cart.total_price }, safe=False)
