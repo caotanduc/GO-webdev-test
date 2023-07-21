@@ -15,8 +15,11 @@ function updateCookieItem(item_id, action) {
 		cart[item_id]['quantity'] -= 1
 		if (cart[item_id]['quantity'] <= 0) {
 			delete cart[item_id]
+			$('#div' + item_id).remove()
+
 			if (Object.keys(cart).length == 0) {
 				$('#cart .card-body').append('<div class="card-empty"><p class="card-empty-text">Your cart is empty.</p></div>')
+				$('.card-title-amount').text('$0')
 			}
 		}
 	}
@@ -27,6 +30,7 @@ function updateCookieItem(item_id, action) {
 		$('#shop' + item_id + ' .shop-item-button').html('<p>ADD TO CART</p>')
 		if (Object.keys(cart).length == 0) {
 			$('#cart .card-body').append('<div class="card-empty"><p class="card-empty-text">Your cart is empty.</p></div>')
+			$('.card-title-amount').text('$0')
 		}
 	}
 
