@@ -41,7 +41,7 @@ Must have:
 Nice to have:
 - [x] Responsive design (look good on all devices: desktops, tablets & mobile phones).
 - [ ] Smooth animations (don't really need to be same as the demo, just do what you think is good).
-- [ ] Deploy the application to ~~heroku~~ [render.com](render.com).
+- [x] Deploy the application to ~~heroku~~ [render.com](render.com).
 
 **link web demo**: [golden-sneakers](https://golden-sneakers.onrender.com/)
 
