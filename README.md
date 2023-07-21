@@ -16,14 +16,50 @@ python3 -m pip install -r requirements.txt
 
 3. Migrate data
 ```bash
-python3 manage.py makemigrations
-python3 manage.py migrate
+python3 manage.py makemigrations --settings=shoppingCartApp.settings_local
+python3 manage.py migrate --settings=shoppingCartApp.settings_local
 ```
 
-4. Run server
+4. Load data
 ```bash
-python3 manage.py runserver
+python3 manage.py loaddata shoes_django.json
 ```
+
+5. Run server
+```bash
+python3 manage.py runserver --settings=shoppingCartApp.settings_local
+```
+
+## tech stack
+- BE & FE: Django
+- Database:
+    - local: sqlite3
+    - deploy: MySQL
+- JS (JQuery)
+- Python (3.11.4)
+
+## deploy process [render.com](render.com)
+1. create accout on [render.com](render.com)
+2. Dashboard > New > Web Service
+3. Fork this project to your own Github
+4. Reopen [render.com] / Dasboard
+5. Connect to your Github Accout
+6. Choose project you forked 
+7. In you Render project dashboard open Environment > Add Environment Variable
+    - PYTHON_VERSON: 3.11.4
+    - Remote Database Info
+        - HOST
+        - USER
+        - NAME
+        - PASSWORD
+
+8. open Settings (Dashboard > Settings) in Start Command
+```bash
+gunicorn shoppingCartApp.wsgi:application
+```
+
+
+
 ## project checklist
 Must have:
 - [x] Display all products in Our Products section (for products data please check from Technical Requirements):
@@ -48,12 +84,6 @@ Nice to have:
 **video demo**: [link](https://studenthcmusedu-my.sharepoint.com/:v:/g/personal/20120270_student_hcmus_edu_vn/EXJeZ9TDZplAtgoJ32dNHekB-6R0FKSLAgwlkwqpLaeJ3w?e=7ea2C3)
 
 
-## tech stack
-- Django
-- MySQL
-- HTML / CSS
-- JS (JQuery)
-- python (3.11.4)
 
 ## troubleshooting
 
