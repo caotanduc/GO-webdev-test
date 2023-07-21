@@ -3,26 +3,57 @@ from .models import ShopItem, Cart, CartItem
 from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.views.decorators.csrf import csrf_exempt
-
 
 
 # Create your views here.
-@csrf_exempt
+@ensure_csrf_cookie
 def index(request):
 	shop_items = ShopItem.objects.all()
 
 	cart = None
-	cart_items = {}
+	cart_items = []
+	cart_cookie = {}
+	items = []
 
 	if request.user.is_authenticated:
-		cart, created = Cart.objects.get_or_create()
+		cart, created = Cart.objects.get_or_create(user=request.user)
 		cart_items = cart.cart_items.all()
+	else:
+		try:
+			cart_cookie = json.loads(request.COOKIES['cart'])
+			items = [int(key) for key in cart_cookie.keys()]
+		except:
+			cart_cookie = {}
 
-	context = {'shop_items': shop_items, 'cart': cart, 'cart_items':cart_items}
+		total_price = 0.0
+		for item_id in cart_cookie:
+			shoe = ShopItem.objects.get(id=item_id)
+
+			price = shoe.price * cart_cookie[item_id]['quantity']
+			total_price += price
+			cart_item = {
+				'shop_item': {
+					'id': int(shoe.id),
+					'color': shoe.color,
+					'image': shoe.image,
+					'name': shoe.name,
+					'price': shoe.price,
+				},
+				'quantity': cart_cookie[item_id]['quantity'],
+				'price': price
+			}
+
+			cart_items.append(cart_item)
+
+		cart = {
+			'total_price': total_price
+		}
+			
+
+	context = {'shop_items': shop_items, 'cart': cart, 'cart_items':cart_items, 'cart_cookie': cart_cookie, 'ids': items}
 	return render(request, 'cart/index.html', context)
 
-@csrf_exempt
+@ensure_csrf_cookie
 def add_to_cart(request):
 	data = json.loads(request.body)
 
@@ -31,12 +62,11 @@ def add_to_cart(request):
 	update_data = { }
 
 	if request.user.is_authenticated:
-		cart, created = Cart.objects.get_or_create()
+		cart, created = Cart.objects.get_or_create(user=request.user)
 		cart_item, created = CartItem.objects.get_or_create(cart=cart, shop_item=item_id)
 		update_data = {}	
 
 		if cart_item.quantity == 0:
-			ShopItem.objects.filter(pk=item_id.pk).update(used=True)
 			cart_item.quantity = 1
 			cart_item.save()
 
@@ -53,7 +83,7 @@ def add_to_cart(request):
 
 
 
-@csrf_exempt
+@ensure_csrf_cookie
 def update_cart_item(request):
 	data = json.loads(request.body)
 
@@ -66,14 +96,13 @@ def update_cart_item(request):
 	}
 
 	if request.user.is_authenticated:
-		cart, created = Cart.objects.get_or_create()
+		cart, created = Cart.objects.get_or_create(user=request.user)
 		cart_item, created = CartItem.objects.get_or_create(cart=cart, shop_item=item_id)
 		cart_item.quantity += diff
 		cart_item.save()
 
 		if cart_item.quantity <= 0:
 			cart_item.quantity = 0
-			ShopItem.objects.filter(pk=item_id.pk).update(used=False)
 			update_data['total_price'] = cart.total_price
 
 			update_data['delete'] = True
@@ -89,17 +118,16 @@ def update_cart_item(request):
 
 	return JsonResponse(update_data, safe=False)
 
-@csrf_exempt
+@ensure_csrf_cookie
 def remove_cart_item(request):
 	data = json.loads(request.body)
 
 	item_id = ShopItem.objects.get(id=data['id'])
 
 	if request.user.is_authenticated:
-		cart, created = Cart.objects.get_or_create()
+		cart, created = Cart.objects.get_or_create(user=request.user)
 		cart_item, created = CartItem.objects.get_or_create(cart=cart, shop_item=item_id)
 		cart_item.quantity=0
-		ShopItem.objects.filter(pk=item_id.pk).update(used=False)
 		cart_item.delete()
 
 	return JsonResponse({ 'total_price' : cart.total_price }, safe=False)

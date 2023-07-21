@@ -1,8 +1,14 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
 import uuid
 
 # Create your models here.
+
+class ServerUser(AnonymousUser):
+	@property
+	def is_authenticated(self):
+		return True
+
 
 class ShopItem(models.Model):
 	image = models.URLField(max_length=200)
@@ -11,15 +17,13 @@ class ShopItem(models.Model):
 	price = models.DecimalField(max_digits=8, decimal_places=2)
 	color = models.CharField(max_length=7)
 
-	used = models.BooleanField(default=False)
-
 	def __str__(self):
 		return self.name
 
 
 class Cart(models.Model):
 	id = models.UUIDField(default=uuid.uuid4, primary_key=True)
-	user = User.objects.get_or_create(username='whatever')[0]
+	user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
 
 	def __str__(self):
 		return str(self.id)

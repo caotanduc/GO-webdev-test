@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +26,6 @@ SECRET_KEY = 'django-insecure-+mh0$6@*#bb@2m$&_-&9qbvyzfq^wmmad4y!hcb*pl05vsf!gq
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'golden-sneakers.onrender.com',
     '127.0.0.1',
 ]
 
@@ -81,15 +79,8 @@ WSGI_APPLICATION = 'shoppingCartApp.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": os.getenv('NAME'),
-        "USER": os.getenv('USER'),
-        "PASSWORD": os.getenv('PASSWORD'),
-        "HOST": os.getenv('HOST'),
-        "PORT": "3306",
-        'OPTIONS': {
-            'sql_mode': 'traditional',
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
