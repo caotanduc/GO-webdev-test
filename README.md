@@ -50,9 +50,9 @@ Nice to have:
 
 ## tech stack
 - Django
-- mysql
+- MySQL
 - HTML / CSS
-- JS (JQuery, AJAX)
+- JS (JQuery)
 - python (3.11.4)
 
 ## troubleshooting
