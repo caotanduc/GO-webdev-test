@@ -1,9 +1,11 @@
-# run this app in your local machine
+# DESCRIPTION
 ---
+
+## Deploy link
 
 **Link website**: Golden Sneakers [https://golden-sneakers.onrender.com/](https://golden-sneakers.onrender.com/)
 
-## run project
+## run project (local)
 1. clone this project
 ```bash
 git clone `https://github.com/caotanduc/GO-webdev-test`
