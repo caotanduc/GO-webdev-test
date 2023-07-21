@@ -1,6 +1,8 @@
 # run this app in your local machine
 ---
 
+**Link website**: Golden Sneakers [https://golden-sneakers.onrender.com/](https://golden-sneakers.onrender.com/)
+
 ## run project
 1. clone this project
 ```bash
@@ -58,6 +60,7 @@ python3 manage.py runserver --settings=shoppingCartApp.settings_local
 gunicorn shoppingCartApp.wsgi:application
 ```
 
+**Video Demo**: [Golden Sneakers Demo Video](https://studenthcmusedu-my.sharepoint.com/:v:/g/personal/20120270_student_hcmus_edu_vn/Eezb_elgPWBAs4CDgyjavtUBUBbN0RXEfJ9VuNOoDKWFwg?e=mLDSFx)
 
 
 ## project checklist
@@ -79,10 +82,7 @@ Nice to have:
 - [ ] Smooth animations (don't really need to be same as the demo, just do what you think is good).
 - [x] Deploy the application to ~~heroku~~ [render.com](render.com).
 
-**link web demo**: [golden-sneakers](https://golden-sneakers.onrender.com/)
-
-**video demo**: [link](https://studenthcmusedu-my.sharepoint.com/:v:/g/personal/20120270_student_hcmus_edu_vn/EXJeZ9TDZplAtgoJ32dNHekB-6R0FKSLAgwlkwqpLaeJ3w?e=7ea2C3)
-
+**Link website**: [golden-sneakers](https://golden-sneakers.onrender.com/)
 
 
 ## troubleshooting
