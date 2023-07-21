@@ -25,7 +25,7 @@ def index(request):
 		except:
 			cart_cookie = {}
 
-		total_price = 0.0
+		total_price = 0
 		for item_id in cart_cookie:
 			shoe = ShopItem.objects.get(id=item_id)
 
