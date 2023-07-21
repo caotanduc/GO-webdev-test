@@ -14,7 +14,6 @@
 
 	<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="{% static 'js/cart.js' %}" defer></script>
-	<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
 	<script>
 		var trash_can = "{% static 'images/trash.png'%}"
 		var check_mark = "{% static 'images/check.png' %}"
@@ -58,7 +57,6 @@
 			cart = {}
 			document.cookie = 'cart=' + JSON.stringify(cart) + ';domain=;path=/'
 		}
-		console.log(cart)
 
 	</script>
 </head>

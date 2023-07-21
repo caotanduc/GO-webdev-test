@@ -1,15 +1,34 @@
 function updateCookieItem(item_id, action) {
+	let price = parseFloat($('#shop' + item_id + ' .shop-item-price').text().trim().match(/^\$?(\d+(\.\d*)?)$/)[1])
+	let total_tag = $('.card-title-amount')[0]
+	let total_price = parseFloat(total_tag.innerHTML.trim().match(/^\$?(\d+(\.\d*)?)$/)[1])
+	
+	
 	if (action === 'add') {
 		if (cart[item_id] == undefined) {
+			let name = $('#shop' + item_id + ' .shop-item-name').text().trim()
+			let color = $('#shop' + item_id + ' .shop-item-image').css('background-color');
+			let img_url = $('#shop' + item_id + ' img').attr('src')
 			cart[item_id] = { 'quantity' : 1 }
-			$('#shop-button' + item_id).html('<img src="' + check_mark + '" style="width: 16px;" alt="Check Mark"/>')
-		}
-		else {
-			return
+			$('#shop' + item_id + ' .shop-item-button').html('<img src="' + check_mark + '" style="width: 16px;" alt="Check Mark"/>')
+
+			if ($('.card-empty').length == 1) {
+				$('.card-empty')[0].remove()
+			}
+
+			$('#cart .card-body').append('<div id="div'+item_id+'" class="cart-item"> <div class="cart-item-left"> <div class="cart-item-image" style="background-color: '+color+';"> <div class="cart-item-block"> <img src="'+img_url+'" alt="'+name+'"> </div> </div> </div> <div class="cart-item-right"> <div class="cart-item-name">'+name+'</div> <div class="cart-item-price">$'+price+'</div> <div class="cart-item-action"> <div class="cart-item-count"> <div data-itemid="'+item_id+'" class="cart-item-count-button">-</div> <div data-itemid="'+item_id+'" class="cart-item-count-number">'+cart[item_id]['quantity']+'</div> <div data-itemid="'+item_id+'" class="cart-item-count-button">+</div> </div> <div data-itemid="'+item_id+'" class="cart-item-remove"> <img src="'+trash_can+'"> </div> </div> </div> </div>');
+
+			total_price += price
+
+			total_tag.innerHTML = '$' + total_price.toFixed(2)
 		}
 	}
 	else if (action === '+') {
 		cart[item_id]['quantity'] += 1
+		$('#div' + item_id + ' .cart-item-count-number').html(cart[item_id]['quantity'])
+		cart_item_price = price * cart[item_id]['quantity']
+		$('#div' + item_id + ' .cart-item-price').html('$' + cart_item_price.toFixed(2))
+		total_tag.innerHTML = '$' + (total_price + price).toFixed(2)
 	}
 	else if (action === '-') {
 		cart[item_id]['quantity'] -= 1
@@ -17,25 +36,35 @@ function updateCookieItem(item_id, action) {
 			delete cart[item_id]
 			$('#div' + item_id).remove()
 
+			$('#shop' + item_id + ' .shop-item-button').html('<p>ADD TO CART</p>')
 			if (Object.keys(cart).length == 0) {
 				$('#cart .card-body').append('<div class="card-empty"><p class="card-empty-text">Your cart is empty.</p></div>')
-				$('.card-title-amount').text('$0')
+				total_tag.innerHTML = '$0'
 			}
+
+			return
 		}
+
+		$('#div' + item_id + ' .cart-item-count-number').html(cart[item_id]['quantity'])
+		cart_item_price = price * cart[item_id]['quantity']
+		$('#div' + item_id + ' .cart-item-price').html('$' + cart_item_price.toFixed(2))
+		$('.card-title-amount').html('$' + (total_price - price).toFixed(2))
 	}
 	else if (action == 'del') {
+		$('.card-title-amount').html('$' + (total_price - cart[item_id]['quantity'] * price).toFixed(2))
+
 		delete cart[item_id]	
 		$('#div' + item_id).remove()
 
 		$('#shop' + item_id + ' .shop-item-button').html('<p>ADD TO CART</p>')
 		if (Object.keys(cart).length == 0) {
 			$('#cart .card-body').append('<div class="card-empty"><p class="card-empty-text">Your cart is empty.</p></div>')
-			$('.card-title-amount').text('$0')
+			total_tag.innerHTML = '$0'
 		}
 	}
 
 	document.cookie = 'cart=' + JSON.stringify(cart) + ';domain=;path=/'
-	location.reload()
+
 }
 
 $(document).ready(function() {
