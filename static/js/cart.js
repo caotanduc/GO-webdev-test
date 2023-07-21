@@ -36,7 +36,7 @@ function updateCookieItem(item_id, action) {
 			delete cart[item_id]
 			$('#div' + item_id).remove()
 
-			$('#shop' + item_id + ' .shop-item-button').html('<p>ADD TO CART</p>')
+			$('#shop' + item_id + ' .shop-item-button').html('ADD TO CART')
 			if (Object.keys(cart).length == 0) {
 				$('#cart .card-body').append('<div class="card-empty"><p class="card-empty-text">Your cart is empty.</p></div>')
 				total_tag.innerHTML = '$0'
@@ -56,7 +56,7 @@ function updateCookieItem(item_id, action) {
 		delete cart[item_id]	
 		$('#div' + item_id).remove()
 
-		$('#shop' + item_id + ' .shop-item-button').html('<p>ADD TO CART</p>')
+		$('#shop' + item_id + ' .shop-item-button').html('ADD TO CART')
 		if (Object.keys(cart).length == 0) {
 			$('#cart .card-body').append('<div class="card-empty"><p class="card-empty-text">Your cart is empty.</p></div>')
 			total_tag.innerHTML = '$0'
@@ -148,7 +148,7 @@ $(document).ready(function() {
 							$('#div' + itemId).remove()
 							$('.card-title-amount').html('$' + data['total_price'])
 	
-							$('#shop' + itemId + ' .shop-item-button').text('ADD TO CART')
+							$('#shop' + itemId + ' .shop-item-button').html('ADD TO CART')
 	
 							if (data['total_price'] == 0.0) {
 								$('.card-empty').css('display', 'block')
@@ -191,7 +191,7 @@ $(document).ready(function() {
 	
 						$('#div' + itemId).remove()
 	
-						$('#shop' + itemId + ' .shop-item-button').html('<p>ADD TO CART</p>')
+						$('#shop' + itemId + ' .shop-item-button').html('ADD TO CART')
 		
 						if (data['total_price'] == 0.0) {
 							$('#cart .card-body').append('<div class="card-empty"><p class="card-empty-text">Your cart is empty.</p></div>')
